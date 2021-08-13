@@ -4,16 +4,29 @@
 
 class vms
 {
-	public $base_url = 'http://localhost/hostel/hh/vms/';
+	public $base_url = 'http://localhost/pms/';
 	public $connect;
 	public $query;
 	public $statement;
 
-	function vms()
-	{
-		$this->connect = new PDO("mysql:host=localhost;dbname=hall", "root", "");
-		session_start();
-	}
+    /**
+     * Constructor.
+     *
+     */
+    public function __construct()
+    {
+      	$this->connect = new PDO("mysql:host=localhost;dbname=hall", "root", "");
+ 		session_start();
+    }
+
+    /**
+     * Destructor.
+     */
+    public function __destruct()
+    {
+        //Close any open SMTP connection nicely
+//         $this->connect->close();
+    }
 
 	function execute($data = null)
 	{

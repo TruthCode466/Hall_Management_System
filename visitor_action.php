@@ -10,11 +10,11 @@ if(isset($_POST["action"]))
 {
 	if($_POST["action"] == 'fetch')
 	{
-		$order_column = array('visitor_table.visitor_name', 'visitor_table.visitor_meet_person_name', 'visitor_table.visitor_department', 'visitor_table.visitor_enter_time', 'visitor_table.visitor_out_time', 'visitor_table.visitor_status', 'admin_table.admin_name');
+		$order_column = array('visitor_table.visitor_name', 'visitor_table.visitor_meet_person_name', 'visitor_table.visitor_block',  'visitor_table.visitor_room', 'visitor_table.visitor_enter_time', 'visitor_table.visitor_out_time', 'visitor_table.visitor_status', 'admin_table.admin_name');
 
 		$output = array();
 
-		$main_query = "
+		$main_query = "visitor_block
 		SELECT * FROM visitor_table 
 		INNER JOIN admin_table 
 		ON admin_table.admin_id = visitor_table.visitor_enter_by 
@@ -113,7 +113,8 @@ if(isset($_POST["action"]))
 			$sub_array = array();
 			$sub_array[] = html_entity_decode($row["visitor_name"]);
 			$sub_array[] = html_entity_decode($row["visitor_meet_person_name"]);
-			$sub_array[] = $row["visitor_department"];
+			$sub_array[] = $row[""];
+			$sub_array[] = $row["visitor_room"];
 			$sub_array[] = $row["visitor_enter_time"];
 			$sub_array[] = $row["visitor_out_time"];
 			$status = '';
