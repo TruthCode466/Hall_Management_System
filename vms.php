@@ -116,7 +116,7 @@ class vms
 		$output = '';
 		foreach($result as $row)
 		{
-			$output .= '<option value="'.$row["name"].'" data-person="'.$row["name"].'">'.$row["name"].'</option>';
+			$output .= '<option value="'.$row["id"].'" data-person="'.$row["name"].'">'.$row["name"].'</option>';
 		}
 		return $output;
 	}

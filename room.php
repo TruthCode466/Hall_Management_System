@@ -1,7 +1,5 @@
 <?php
 
-//department.php
-
 include('vms.php');
 
 $visitor = new vms();
@@ -20,29 +18,29 @@ include('header.php');
 
 include('sidebar.php');
 ?>
-	
-	
 	        <div class="col-sm-10 offset-sm-2 py-4">
 	        	<span id="message"></span>
 	            <div class="card">
 	            	<div class="card-header">
 	            		<div class="row">
 	            			<div class="col">
-	            				<h2>Department Area</h2>
+	            				<h2>Room Area</h2>
 	            			</div>
 	            			<div class="col text-right">
-	            				<button type="button" name="add_department" id="add_department" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
+	            				<button type="button" name="add_room" id="add_room" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
 	            			</div>
 	            		</div>
 	            	</div>
 	            	<div class="card-body">
 	            		<div class="table-responsive">
-	            			<table class="table table-striped table-bordered" id="department_table">
+	            			<table class="table table-striped table-bordered" id="room_table">
 	            				<thead>
 	            					<tr>
-	            						<th>Department Name</th>
-										<th>Person List</th>							
-										<th>Action</th>
+                                        <th>Room Name</th>
+                                        <th>Block ID</th>
+                                        <th>Active</th>
+                                        <th>Capacity</th>
+                                        <th>Action</th>
 	            					</tr>
 	            				</thead>
 	            			</table>
@@ -56,9 +54,9 @@ include('sidebar.php');
 </body>
 </html>
 
-<div id="departmentModal" class="modal fade">
+<div id="roomModal" class="modal fade">
   	<div class="modal-dialog">
-    	<form method="post" id="deparment_form">
+    	<form method="post" id="room_form">
       		<div class="modal-content">
         		<div class="modal-header">
           			<h4 class="modal-title" id="modal_title">Add Data</h4>
@@ -66,25 +64,40 @@ include('sidebar.php');
         		</div>
         		<div class="modal-body">
         			<span id="form_message"></span>
-		          	<div class="form-group">
+        		   	<div class="form-group">
 		          		<div class="row">
-			            	<label class="col-md-4 text-right">Department Name</label>
-			            	<div class="col-md-6">
-			            		<input type="text" name="department_name" id="department_name" class="form-control" required data-parsley-pattern="/^[a-zA-Z\s]+$/" data-parsley-trigger="keyup" />
+			            	<label class="col-md-4 text-right">Block Name</label>
+			            	<div class="col-md-8">
+			            		<select name="block_id" id="block_id" class="form-control" required data-parsley-trigger="keyup">
+			            			<option value="">Select Block</option>
+			            			<?php echo $visitor->load_blocks(); ?>
+			            		</select>
 			            	</div>
 			            </div>
 		          	</div>
 		          	<div class="form-group">
 		          		<div class="row">
-			            	<label class="col-md-4 text-right">Contact Person</label>
+			            	<label class="col-md-4 text-right">Room Name</label>
 			            	<div class="col-md-6">
-			            		<input type="text" name="department_contact_person[]" class="form-control department_contact_person" id="department_contact_person" required data-parsley-pattern="/^[a-zA-Z\s]+$/"  data-parsley-trigger="keyup" />
-			            	</div>
-			            	<div class="col-md-2">
-			            		<button type="button" name="add_person" id="add_person" class="btn btn-success btn-sm">+</button>
+			            		<input type="text" name="name" id="name" class="form-control" required data-parsley-pattern="/^(.+)$/" data-parsley-trigger="keyup" />
 			            	</div>
 			            </div>
-		            	<div id="append_person"></div>
+		          	</div>
+		          	<div class="form-group">
+		          		<div class="row">
+			            	<label class="col-md-4 text-right">Room Capacity</label>
+			            	<div class="col-md-6">
+			            		<input type="number" name="capacity" id="capacity" class="form-control" required data-parsley-pattern="/^[\d+\s]+$/" data-parsley-trigger="keyup" />
+			            	</div>
+			            </div>
+		          	</div>
+		          	<div class="form-group">
+		          		<div class="row">
+			            	<label class="col-md-4 text-right">Room Active</label>
+			            	<div class="col-md-6">
+			            		<input type="checkbox" name="active" id="active" class="form-control" required checked/>
+			            	</div>
+			            </div>
 		          	</div>
         		</div>
         		<div class="modal-footer">
@@ -102,28 +115,32 @@ include('sidebar.php');
 
 $(document).ready(function(){
 
-	var dataTable = $('#department_table').DataTable({
+    console.log("loading data...");
+
+	var dataTable = $('#room_table').DataTable({
 		"processing" : true,
 		"serverSide" : true,
 		"order" : [],
 		"ajax" : {
-			url:"department_action.php",
+			url:"room_action.php",
 			type:"POST",
 			data:{action:'fetch'}
 		},
 		"columnDefs":[
 			{
-				"targets":[2],
+				"targets":[4],
 				"orderable":false,
 			},
 		],
 	});
 
-	$('#add_department').click(function(){
-		
-		$('#deparment_form')[0].reset();
+    console.log("on add room click start...");
 
-		$('#deparment_form').parsley().reset();
+	$('#add_room').click(function(){
+		
+		$('#room_form')[0].reset();
+
+		$('#room_form').parsley().reset();
 
     	$('#modal_title').text('Add Data');
 
@@ -131,7 +148,7 @@ $(document).ready(function(){
 
     	$('#submit_button').val('Add');
 
-    	$('#departmentModal').modal('show');
+    	$('#roomModal').modal('show');
 
     	$('#append_person').html('');
 
@@ -149,7 +166,7 @@ $(document).ready(function(){
 		<div class="row mt-2" id="person_`+count_person+`">
 			<label class="col-md-4">&nbsp;</label>
 			<div class="col-md-6">
-				<input type="text" name="department_contact_person[]" class="form-control department_contact_person" required data-parsley-pattern="/^[a-zA-Z ]+$/"  data-parsley-trigger="keyup" />
+				<input type="text" name="room_contact_person[]" class="form-control room_contact_person" required data-parsley-pattern="/^[a-zA-Z ]+$/"  data-parsley-trigger="keyup" />
 			</div>
 			<div class="col-md-2">
 				<button type="button" name="remove_person" class="btn btn-danger btn-sm remove_person" data-id="`+count_person+`">-</button>
@@ -167,14 +184,14 @@ $(document).ready(function(){
 
 	});
 
-	$('#deparment_form').parsley();
+	$('#room_form').parsley();
 
-	$('#deparment_form').on('submit', function(event){
+	$('#room_form').on('submit', function(event){
 		event.preventDefault();
-		if($('#deparment_form').parsley().isValid())
+		if($('#room_form').parsley().isValid())
 		{		
 			$.ajax({
-				url:"department_action.php",
+				url:"room_action.php",
 				method:"POST",
 				data:$(this).serialize(),
 				dataType:'json',
@@ -193,7 +210,7 @@ $(document).ready(function(){
 					}
 					else
 					{
-						$('#departmentModal').modal('hide');
+						$('#roomModal').modal('hide');
 						$('#message').html(data.success);
 						dataTable.ajax.reload();
 
@@ -210,28 +227,28 @@ $(document).ready(function(){
 
 	$(document).on('click', '.edit_button', function(){
 
-		var department_id = $(this).data('id');
+		var room_id = $(this).data('id');
 
-		$('#deparment_form').parsley().reset();
+		$('#room_form').parsley().reset();
 
 		$('#form_message').html('');
 
 		$.ajax({
 
-	      	url:"department_action.php",
+	      	url:"room_action.php",
 
 	      	method:"POST",
 
-	      	data:{department_id:department_id, action:'fetch_single'},
+	      	data:{id:room_id, action:'fetch_single'},
 
 	      	dataType:'JSON',
 
 	      	success:function(data)
 	      	{
 
-	        	$('#department_name').val(data.department_name);
+	        	$('#room_name').val(data.name);
 
-	        	var person_array = data.department_contact_person.split(', ');
+	        	var person_array = data.room_contact_person.split(', ');
 
 	        	var html = '';
 
@@ -240,7 +257,7 @@ $(document).ready(function(){
 	        		
 	        		if(count == 0)
 	        		{
-	        			$('#department_contact_person').val(person_array[count]);
+	        			$('#room_contact_person').val(person_array[count]);
 	        		}
 	        		else
 	        		{
@@ -248,7 +265,7 @@ $(document).ready(function(){
 	        			<div class="row mt-2" id="person_`+count+`">
 							<label class="col-md-4">&nbsp;</label>
 							<div class="col-md-6">
-								<input type="text" name="department_contact_person[]" class="form-control department_contact_person" required data-parsley-pattern="/^[a-zA-Z ]+$/"  data-parsley-trigger="keyup" value="`+person_array[count]+`" />
+								<input type="text" name="room_contact_person[]" class="form-control room_contact_person" required data-parsley-pattern="/^[a-zA-Z ]+$/"  data-parsley-trigger="keyup" value="`+person_array[count]+`" />
 							</div>
 							<div class="col-md-2">
 								<button type="button" name="remove_person" class="btn btn-danger btn-sm remove_person" data-id="`+count+`">-</button>
@@ -266,9 +283,9 @@ $(document).ready(function(){
 
 	        	$('#submit_button').val('Edit');
 
-	        	$('#departmentModal').modal('show');
+	        	$('#roomModal').modal('show');
 
-	        	$('#hidden_id').val(department_id);
+	        	$('#hidden_id').val(room_id);
 
 	      	}
 
@@ -285,7 +302,7 @@ $(document).ready(function(){
 
       		$.ajax({
 
-        		url:"department_action.php",
+        		url:"room_action.php",
 
         		method:"POST",
 

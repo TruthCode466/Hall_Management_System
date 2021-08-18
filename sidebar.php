@@ -19,7 +19,7 @@
 	            	$page_name = basename($_SERVER['PHP_SELF']);
 	            	$dashboard_active = 'inactive_class';
 	            	$user_active = 'inactive_class';
-	            	$department_active = 'inactive_class';
+	            	$block_active = 'inactive_class';
 	            	$visitor_active = 'inactive_class';
 	            	$profile_active = 'inactive_class';
 	            	$change_password_active = 'inactive_class';
@@ -32,9 +32,9 @@
 	            	{
 	            		$user_active = 'active_class';
 	            	}
-	            	if($page_name == 'department.php')
+	            	if($page_name == 'block.php')
 	            	{
-	            		$department_active = 'active_class';
+	            		$block_active = 'active_class';
 	            	}
 	            	if($page_name == 'visitor.php')
 	            	{
@@ -64,7 +64,10 @@
 	                    <a class="nav-link <?php echo $user_active; ?>" href="user.php"><span class="ml-2 d-none d-sm-inline"><i class="fas fa-users"></i> User</span></a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link <?php echo $department_active; ?>" href="department.php"><span class="ml-2 d-none d-sm-inline"><i class="far fa-building"></i> Department</span></a>
+	                    <a class="nav-link <?php echo $block_active; ?>" href="block.php"><span class="ml-2 d-none d-sm-inline"><i class="far fa-building"></i> Block</span></a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link <?php echo $room_active; ?>" href="room.php"><span class="ml-2 d-none d-sm-inline"><i class="far fa-building"></i> Room</span></a>
 	                </li>
 	            	<?php
 	            	}

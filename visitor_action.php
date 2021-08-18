@@ -10,11 +10,11 @@ if(isset($_POST["action"]))
 {
 	if($_POST["action"] == 'fetch')
 	{
-		$order_column = array('visitor_table.visitor_name', 'visitor_table.visitor_meet_person_name', 'visitor_table.visitor_block',  'visitor_table.visitor_room', 'visitor_table.visitor_enter_time', 'visitor_table.visitor_out_time', 'visitor_table.visitor_status', 'admin_table.admin_name');
+		$order_column = array('visitor_table.visitor_name', 'visitor_table.visitor_meet_person_name', 'visitor_table.visitor_block_id', 'visitor_table.visitor_room_id', 'visitor_table.visitor_room', 'visitor_table.visitor_enter_time', 'visitor_table.visitor_out_time', 'visitor_table.visitor_status', 'admin_table.admin_name');
 
 		$output = array();
 
-		$main_query = "visitor_block
+		$main_query = "
 		SELECT * FROM visitor_table 
 		INNER JOIN admin_table 
 		ON admin_table.admin_id = visitor_table.visitor_enter_by 
@@ -55,7 +55,8 @@ if(isset($_POST["action"]))
 		{
 			$search_query .= 'visitor_table.visitor_name LIKE "%'.$_POST["search"]["value"].'%" ';
 			$search_query .= 'OR visitor_table.visitor_meet_person_name LIKE "%'.$_POST["search"]["value"].'%" ';
-			$search_query .= 'OR visitor_table.visitor_department LIKE "%'.$_POST["search"]["value"].'%" ';
+			$search_query .= 'OR visitor_table.visitor_block_id LIKE "%'.$_POST["search"]["value"].'%" ';
+			$search_query .= 'OR visitor_table.visitor_room_id LIKE "%'.$_POST["search"]["value"].'%" ';
 			$search_query .= 'OR visitor_table.visitor_enter_time LIKE "%'.$_POST["search"]["value"].'%" ';
 			$search_query .= 'OR visitor_table.visitor_out_time LIKE "%'.$_POST["search"]["value"].'%" ';
 			$search_query .= 'OR visitor_table.visitor_status LIKE "%'.$_POST["search"]["value"].'%" ';
@@ -162,7 +163,8 @@ if(isset($_POST["action"]))
 			':visitor_mobile_no'	=>	$_POST["visitor_mobile_no"],
 			':visitor_address'		=>	$visitor->clean_input($_POST["visitor_address"]),
 			':visitor_meet_person_name' =>	$_POST["visitor_meet_person_name"],
-			':visitor_department'	=>	$_POST["visitor_department"],
+			':visitor_block_id'	=>	$_POST["visitor_block_id"],
+			':visitor_room_id'	=>	$_POST["visitor_room_id"],
 			':visitor_reason_to_meet' =>	$visitor->clean_input($_POST["visitor_reason_to_meet"]),
 			':visitor_enter_time'	=>	$visitor->get_datetime(),
 			':visitor_outing_remark'=>	'',
@@ -173,13 +175,13 @@ if(isset($_POST["action"]))
 
 		$visitor->query = "
 		INSERT INTO visitor_table 
-		(visitor_name, visitor_email, visitor_mobile_no, visitor_address, visitor_meet_person_name, visitor_department, visitor_reason_to_meet, visitor_enter_time, visitor_outing_remark, visitor_out_time, visitor_status, visitor_enter_by) 
-		VALUES (:visitor_name, :visitor_email, :visitor_mobile_no, :visitor_address, :visitor_meet_person_name, :visitor_department, :visitor_reason_to_meet, :visitor_enter_time, :visitor_outing_remark, :visitor_out_time, :visitor_status, :visitor_enter_by)
+		(visitor_name, visitor_email, visitor_mobile_no, visitor_address, visitor_meet_person_name, visitor_block_id, visitor_room_id, visitor_reason_to_meet, visitor_enter_time, visitor_outing_remark, visitor_out_time, visitor_status, visitor_enter_by)
+		VALUES (:visitor_name, :visitor_email, :visitor_mobile_no, :visitor_address, :visitor_meet_person_name, :visitor_block_id, :visitor_room_id, :visitor_reason_to_meet, :visitor_enter_time, :visitor_outing_remark, :visitor_out_time, :visitor_status, :visitor_enter_by)
 			";
 
 		$visitor->execute($data);
 
-		echo '<div class="alert alert-success">Department Added</div>';
+		echo '<div class="alert alert-success">Visitor Added</div>';
 	}
 
 	if($_POST["action"] == 'fetch_single')
@@ -200,7 +202,8 @@ if(isset($_POST["action"]))
 			$data['visitor_mobile_no'] = $row['visitor_mobile_no'];
 			$data['visitor_address'] = $row['visitor_address'];
 			$data['visitor_meet_person_name'] = $row['visitor_meet_person_name'];
-			$data['visitor_department'] = $row['visitor_department'];
+			$data['visitor_block_id'] = $row['visitor_block_id'];
+			$data['visitor_room_id'] = $row['visitor_room_id'];
 			$data['visitor_reason_to_meet'] = $row['visitor_reason_to_meet'];
 			$data['visitor_outing_remark'] = $row['visitor_outing_remark'];
 		}
@@ -216,7 +219,8 @@ if(isset($_POST["action"]))
 			':visitor_mobile_no'	=>	$_POST["visitor_mobile_no"],
 			':visitor_address'		=>	$visitor->clean_input($_POST["visitor_address"]),
 			':visitor_meet_person_name' =>	$_POST["visitor_meet_person_name"],
-			':visitor_department'	=>	$_POST["visitor_department"],
+			':visitor_block_id'	=>	$_POST["visitor_block_id"],
+			':visitor_room_id'	=>	$_POST["visitor_room_id"],
 			':visitor_reason_to_meet' =>	$visitor->clean_input($_POST["visitor_reason_to_meet"]),
 		);
 
@@ -227,8 +231,9 @@ if(isset($_POST["action"]))
 		visitor_mobile_no = :visitor_mobile_no, 
 		visitor_address = :visitor_address, 
 		visitor_meet_person_name = :visitor_meet_person_name, 
-		visitor_department = :visitor_department, 
-		visitor_reason_to_meet = :visitor_reason_to_meet 
+		visitor_block_id = :visitor_block_id,
+		visitor_room_id = :visitor_room_id,
+		visitor_reason_to_meet = :visitor_reason_to_meet
 		WHERE visitor_id = '".$_POST['hidden_id']."'
 		";
 
