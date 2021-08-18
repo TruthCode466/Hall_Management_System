@@ -161,6 +161,9 @@ $(document).ready(function(){
 
 	$('#block_form').on('submit', function(event){
 		event.preventDefault();
+
+		console.log("data: ", $(this).serialize());
+
 		if($('#block_form').parsley().isValid())
 		{		
 			$.ajax({
@@ -223,35 +226,7 @@ $(document).ready(function(){
 
 	      		console.log("data: ", data);
 
-
-	        	$('#block_name').val(data.name);
-
-	        	var html = '';
-
-	        	for(var count = 0; count < person_array.length; count++)
-	        	{
-	        		
-	        		if(count == 0)
-	        		{
-	        			$('#block_contact_person').val(person_array[count]);
-	        		}
-	        		else
-	        		{
-	        			html += `
-	        			<div class="row mt-2" id="person_`+count+`">
-							<label class="col-md-4">&nbsp;</label>
-							<div class="col-md-6">
-								<input type="text" name="block_contact_person[]" class="form-control block_contact_person" required data-parsley-pattern="/^[a-zA-Z ]+$/"  data-parsley-trigger="keyup" value="`+person_array[count]+`" />
-							</div>
-							<div class="col-md-2">
-								<button type="button" name="remove_person" class="btn btn-danger btn-sm remove_person" data-id="`+count+`">-</button>
-							</div>
-						</div>
-	        			`;
-	        		}
-	        	}
-
-	        	$('#append_person').html(html);
+	        	$('#name').val(data.name);
 
 	        	$('#modal_title').text('Edit Data');
 

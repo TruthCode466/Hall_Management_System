@@ -112,7 +112,7 @@ if(isset($_POST["action"]))
 
 			$visitor->query = "
 			INSERT INTO block 
-			(name, room_count) 
+			(name, room_count)
 			VALUES (:name, :room_count)
 			";
 
@@ -177,13 +177,12 @@ if(isset($_POST["action"]))
 		{
 			$data = array(
 				':name'		=>	$visitor->clean_input($_POST["name"]),
-				':room_count'	=> 0
 			);
 
 			$visitor->query = "
 			UPDATE block 
-			SET name = :name, 
-			WHERE id = '".$_POST['hidden_id']."'
+			SET name = :name
+			WHERE id = '".$_POST["hidden_id"]."'
 			";
 
 			$visitor->execute($data);

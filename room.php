@@ -95,7 +95,7 @@ include('sidebar.php');
 		          		<div class="row">
 			            	<label class="col-md-4 text-right">Room Active</label>
 			            	<div class="col-md-6">
-			            		<input type="checkbox" name="active" id="active" class="form-control" required checked/>
+			            		<input type="checkbox" name="active" id="active" class="form-control" checked/>
 			            	</div>
 			            </div>
 		          	</div>
@@ -188,6 +188,7 @@ $(document).ready(function(){
 
 	$('#room_form').on('submit', function(event){
 		event.preventDefault();
+		console.log($(this).serialize());
 		if($('#room_form').parsley().isValid())
 		{		
 			$.ajax({
@@ -246,36 +247,15 @@ $(document).ready(function(){
 	      	success:function(data)
 	      	{
 
-	        	$('#room_name').val(data.name);
+	      	    console.log(data);
 
-	        	var person_array = data.room_contact_person.split(', ');
+	        	$('#name').val(data.name);
 
-	        	var html = '';
+	        	$('#block_id').val(data.block_id);
 
-	        	for(var count = 0; count < person_array.length; count++)
-	        	{
-	        		
-	        		if(count == 0)
-	        		{
-	        			$('#room_contact_person').val(person_array[count]);
-	        		}
-	        		else
-	        		{
-	        			html += `
-	        			<div class="row mt-2" id="person_`+count+`">
-							<label class="col-md-4">&nbsp;</label>
-							<div class="col-md-6">
-								<input type="text" name="room_contact_person[]" class="form-control room_contact_person" required data-parsley-pattern="/^[a-zA-Z ]+$/"  data-parsley-trigger="keyup" value="`+person_array[count]+`" />
-							</div>
-							<div class="col-md-2">
-								<button type="button" name="remove_person" class="btn btn-danger btn-sm remove_person" data-id="`+count+`">-</button>
-							</div>
-						</div>
-	        			`;
-	        		}
-	        	}
+	        	$('#capacity').val(data.capacity);
 
-	        	$('#append_person').html(html);
+	        	$('#active').prop('checked', data.active != 0);
 
 	        	$('#modal_title').text('Edit Data');
 

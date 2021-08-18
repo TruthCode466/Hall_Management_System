@@ -62,7 +62,7 @@ if(isset($_POST["action"]))
 			$sub_array = array();
 			$sub_array[] = html_entity_decode($row["name"]);
 			$sub_array[] = html_entity_decode($row["block_id"]);
-			$sub_array[] = html_entity_decode($row["active"]);
+			$sub_array[] = $row["active"] == '0' ? 'no' : 'yes';
 			$sub_array[] = html_entity_decode($row["capacity"]);
             $sub_array[] = '
 			<div align="center">
@@ -111,7 +111,7 @@ if(isset($_POST["action"]))
 				':name'		=>	$visitor->clean_input($_POST["name"]),
 				':block_id'		=>	$visitor->clean_input($_POST["block_id"]),
 				':capacity'		=>	$visitor->clean_input($_POST["capacity"]),
-				':active'		=>	$visitor->clean_input($_POST["active"]),
+				':active'		=>	isset($_POST["active"]) ? true : false
 			);
 
 			$visitor->query = "
@@ -164,10 +164,7 @@ if(isset($_POST["action"]))
 
 		$data = array(
 			':id'	=>	$_POST['hidden_id'],
-	        ':name'	=>	$_POST["name"],
-			':block_id'	=>	$_POST['block_id'],
-			':capacity'	=>	$_POST['capacity'],
-			':active'	=>	$_POST['active']
+	        ':name'	=>	$_POST["name"]
 		);
 
 		$visitor->query = "
@@ -188,11 +185,11 @@ if(isset($_POST["action"]))
 				':name'		=>	$visitor->clean_input($_POST["name"]),
 				':block_id'		=>	$visitor->clean_input($_POST["block_id"]),
 				':capacity'		=>	$visitor->clean_input($_POST["capacity"]),
-				':active'		=>	$visitor->clean_input($_POST["active"]),
+				':active'		=>	isset($_POST["active"]) ? true : false,
 			);
 
 			$visitor->query = "
-			UPDATE block 
+			UPDATE room
 			SET name = :name, block_id = :block_id, capacity = :capacity, active = :active
 			WHERE id = '".$_POST['hidden_id']."'
 			";
