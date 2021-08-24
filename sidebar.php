@@ -1,3 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+
+<style type="text/css">
+	
+body {
+
+	background-color: grey;
+}
+
+div.man {
+
+	background-color: blue;
+}
+
+</style>
+
+
+</head>
+<body>
+
+
 <div class="container-fluid fixed-top bg-dark py-3" style="z-index:1049;">
 	    <div class="row">
 	        <div class="col-2 collapse show sidebar text-center">
@@ -6,7 +31,7 @@
 	        <div class="col-10">
 	            <!-- toggler -->
 	            <a data-toggle="collapse" href="#" data-target=".collapse" role="button">
-	                <h3 class="mt-2 mb-2 text-white">Visitor Management System</h3>
+	                <h3 class="mt-2 mb-2 text-white">Traditional Hall Management System</h3>
 	            </a>
 	        </div>
 	    </div>
@@ -61,13 +86,18 @@
 	            	{
 	            	?>
 	            	<li class="nav-item">
-	                    <a class="nav-link <?php echo $user_active; ?>" href="user.php"><span class="ml-2 d-none d-sm-inline"><i class="fas fa-users"></i> User</span></a>
+	                    <a class="nav-link <?php echo $user_active; ?>" href="user.php"><span class="ml-2 d-none d-sm-inline"><i class="fas fa-users"></i>Porter_Tab</span></a>
+	                </li>
+
+	                  <li class="nav-item">
+	                    <a class="nav-link <?php echo $room_active; ?>" href="Resident.php"><span class="ml-2 d-none d-sm-inline"><i class="far fa-building"></i> Resident_Tab</span></a>
+	                </li>
+
+	                <li class="nav-item">
+	                    <a class="nav-link <?php echo $block_active; ?>" href="block.php"><span class="ml-2 d-none d-sm-inline"><i class="far fa-building"></i> Block_Tab</span></a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link <?php echo $block_active; ?>" href="block.php"><span class="ml-2 d-none d-sm-inline"><i class="far fa-building"></i> Block</span></a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link <?php echo $room_active; ?>" href="room.php"><span class="ml-2 d-none d-sm-inline"><i class="far fa-building"></i> Room</span></a>
+	                    <a class="nav-link <?php echo $room_active; ?>" href="room.php"><span class="ml-2 d-none d-sm-inline"><i class="far fa-building"></i> Room_Tab</span></a>
 	                </li>
 	            	<?php
 	            	}
@@ -87,3 +117,9 @@
 	                </li>
 	            </ul>
 	        </div>
+
+
+
+
+	        </body>
+</html>

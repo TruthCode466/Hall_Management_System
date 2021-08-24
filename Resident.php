@@ -28,7 +28,7 @@ include('sidebar.php');
 	            	<div class="card-header">
 	            		<div class="row">
 	            			<div class="col">
-	            				<h2>Porter Management</h2>
+	            				<h2>Resident Area</h2>
 	            			</div>
 	            			<div class="col text-right">
 	            				<button type="button" name="add_user" id="add_user" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
@@ -41,10 +41,11 @@ include('sidebar.php');
 	            				<thead>
 	            					<tr>
 	            						<th>Image</th>
-	            						<th>Porter Name</th>
-										<th>Porter Contact No.</th>
-										<th>Porter Email</th>
-										<th>Created On</th>					
+	            						<th>Resident_Id</th>
+										<th>Full_name</th>
+										<th>Block_id</th>
+										<th>Room_Id</th>
+										<th>Contact</th>					
 										<th>Action</th>
 	            					</tr>
 	            				</thead>
@@ -64,49 +65,66 @@ include('sidebar.php');
     	<form method="post" id="user_form" enctype="multipart/form-data">
       		<div class="modal-content">
         		<div class="modal-header">
-          			<h4 class="modal-title" id="modal_title">Add User</h4>
+          			<h4 class="modal-title" id="modal_title">Add Resident</h4>
           			<button type="button" class="close" data-dismiss="modal">&times;</button>
         		</div>
         		<div class="modal-body">
 		          	<div class="form-group">
 		          		<div class="row">
-			            	<label class="col-md-4 text-right">Porter Name <span class="text-danger">*</span></label>
+			            	<label class="col-md-4 text-right">Resident_Id<span class="text-danger">*</span></label>
 			            	<div class="col-md-8">
-			            		<input type="text" name="admin_name" id="admin_name" class="form-control" required data-parsley-pattern="/^[a-zA-Z\s]+$/" data-parsley-maxlength="150" data-parsley-trigger="keyup" />
+			            		<input type="text" name="resident_id" id=" resident_id" class="form-control" required data-parsley-pattern="/^[a-zA-Z\s]+$/" data-parsley-maxlength="150" data-parsley-trigger="keyup" />
 			            	</div>
 			            </div>
 		          	</div>
+
+
+                      <div class="modal-body">
 		          	<div class="form-group">
 		          		<div class="row">
-			            	<label class="col-md-4 text-right">Porter Contact No. <span class="text-danger">*</span></label>
+			            	<label class="col-md-4 text-right">Full name<span class="text-danger">*</span></label>
 			            	<div class="col-md-8">
-			            		<input type="text" name="admin_contact_no" id="admin_contact_no" class="form-control" required data-parsley-type="integer" data-parsley-minlength="10" data-parsley-maxlength="12" data-parsley-trigger="keyup" />
-			            	</div>
-			            </div>
-		          	</div>
-		          	<div class="form-group">
-		          		<div class="row">
-			            	<label class="col-md-4 text-right">Porter Email <span class="text-danger">*</span></label>
-			            	<div class="col-md-8">
-			            		<input type="text" name="admin_email" id="admin_email" class="form-control" required data-parsley-type="email" data-parsley-maxlength="150" data-parsley-trigger="keyup" />
+			            		<input type="text" name="full_name" id="full_name" class="form-control" required data-parsley-pattern="/^[a-zA-Z\s]+$/" data-parsley-maxlength="150" data-parsley-trigger="keyup" />
 			            	</div>
 			            </div>
 		          	</div>
 
 		          	<div class="form-group">
 		          		<div class="row">
-			            	<label class="col-md-4 text-right">Porter Password <span class="text-danger">*</span></label>
+			            	<label class="col-md-4 text-right">Porter Contact No. <span class="text-danger">*</span></label>
 			            	<div class="col-md-8">
-			            		<input type="password" name="admin_password" id="admin_password" class="form-control" required data-parsley-minlength="6" data-parsley-maxlength="16" data-parsley-trigger="keyup" />
+			            		<input type="text" name="resident_contact_no" id="resident__contact_no" class="form-control" required data-parsley-type="integer" data-parsley-minlength="10" data-parsley-maxlength="12" data-parsley-trigger="keyup" />
 			            	</div>
 			            </div>
 		          	</div>
+
+                  <div class="modal-body">
+		          	<div class="form-group">
+		          		<div class="row">
+			            	<label class="col-md-4 text-right">Block_Id<span class="text-danger">*</span></label>
+			            	<div class="col-md-8">
+			            		<input type="text" name="block_id" id="Block_Id" class="form-control" required data-parsley-pattern="/^[a-zA-Z\s]+$/" data-parsley-maxlength="150" data-parsley-trigger="keyup" />
+			            	</div>
+			            </div>
+		          	</div>
+
+                  <div class="modal-body">
+		          	<div class="form-group">
+		          		<div class="row">
+			            	<label class="col-md-4 text-right">Room_Id<span class="text-danger">*</span></label>
+			            	<div class="col-md-8">
+			            		<input type="text" name="Room_Id" id="Room_Id" class="form-control" required data-parsley-pattern="/^[a-zA-Z\s]+$/" data-parsley-maxlength="150" data-parsley-trigger="keyup" />
+			            	</div>
+			            </div>
+		          	</div>
+
+
 		          	
 		          	<div class="form-group">
 		          		<div class="row">
-			            	<label class="col-md-4 text-right">Porter Profile</label>
+			            	<label class="col-md-4 text-right">Resident_Image</label>
 			            	<div class="col-md-8">
-			            		<input type="file" name="user_image" id="user_image" />
+			            		<input type="file" name="display_image" id="display_image" />
 								<span id="user_uploaded_image"></span>
 			            	</div>
 			            </div>
@@ -132,7 +150,7 @@ $(document).ready(function(){
 		"serverSide" : true,
 		"order" : [],
 		"ajax" : {
-			url:"user_action.php",
+			url:"Resident_action.php",
 			type:"POST",
 			data:{action:'fetch'}
 		},
@@ -191,7 +209,7 @@ $(document).ready(function(){
 				}
 			}
 			$.ajax({
-				url:"user_action.php",
+				url:"Resident_action.php",
 				method:"POST",
 				data:new FormData(this),
 				contentType:false,
@@ -219,7 +237,7 @@ $(document).ready(function(){
 		var admin_id = $(this).data('id');
 		$('#user_form').parsley().reset();
 		$.ajax({
-	      	url:"user_action.php",
+	      	url:"Resident_action.php",
 	      	method:"POST",
 	      	data:{admin_id:admin_id, action:'fetch_single'},
 	      	dataType:'JSON',
@@ -261,7 +279,7 @@ $(document).ready(function(){
 		if(confirm("Are you sure you want to "+next_status+" it?"))
     	{
     		$.ajax({
-    			url:"user_action.php",
+    			url:"Resident_action.php",
     			method:"POST",
     			data:{id:id, action:'delete', status:status, next_status:next_status},
     			success:function(data)

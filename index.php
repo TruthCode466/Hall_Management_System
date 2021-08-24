@@ -16,8 +16,26 @@ include('header.php');
 		<br />
 		<br />
 		<br />
+
+		<<!DOCTYPE html>
+		<html>
+		<head>
+			<meta charset="utf-8">
+			<title></title>
+
+<style type="text/css">
+	
+body {
+
+	background-color: blueviolet;
+}
+
+</style>
+
+			</head>
+		
 		<div class="container">
-			<h3 align="center">Visitor Management System</h3>
+			<h3 align="center">Traditional Hall Management System</h3>
 			<br />
 			
 			<div class="row">
@@ -25,7 +43,7 @@ include('header.php');
 				<div class="col-md-6">
 					<span id="error"></span>
 					<div class="card">
-						<div class="card-header">Login</div>
+						<div class="card-header">Admin/Porter Login</div>
 						<div class="card-body">
 							<form method="post" id="login_form">
 								<div class="form-group">
@@ -92,3 +110,10 @@ $(document).ready(function(){
 });
 
 </script>
+
+
+
+		<body>
+		
+		</body>
+		</html>
